@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table multiplication</title>
+</head>
+<body>
+    <% let nbr = req.query.nbr ?? 1 %>
+    <% if (nbr < 1 || nbr > 10) { %>
+        Erreur de nombre, il doit être compris entre 1 et 10
+    <% } else { %>
+    <ul>
+        <% for (i=1; i <= 10; i++) { %>
+            <li><%= i %> x <%= nbr %> = <%= i*nbr %></li>
+        <% } %>
+    </ul>
+    <% } %>
+    
+</body>
+</html>
