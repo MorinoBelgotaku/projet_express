@@ -34,7 +34,7 @@ app.get('/table-multiplication', (req, res) => {
   } else {
     let resultat = '';
     for (i=1; i <= 10; i++) {
-      resultat += (`${i} x ${nbr} = ${i*nbr}<br>`)
+      resultat += `${i} x ${nbr} = ${i*nbr}<br>`
     }
     res.send(`${resultat}`)
   }
@@ -65,6 +65,22 @@ app.get('/calculatrice', (req, res) => {
   }
 });
 
+app.get('/youtube', (req, res) => {
+  res.redirect('https://youtube.com')
+});
+
+app.get('/eafc', (req, res) => {
+  res.redirect('https://www.iepsm.be/')
+});
+
+app.get('/cv_morin_bruno', (req, res) => {
+  res.download('PDF/CV_Morin_Bruno.pdf')
+});
+
+
+
+
 app.listen(port, () => {
   console.log('Serveur en ligne !')
+  console.log(`localhost:${port}`)
 });
