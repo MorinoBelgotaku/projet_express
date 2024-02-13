@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>Utilisateurs</h1>
+            <% if (users.length == 0) { %>
+                Aucun utilisateurs
+            <% } else { %>
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Action</th>
+                </tr>
+                <% for(i=0; i<users.length; i++){ %>
+                <tr>
+                    <td><%= `${i+1}` %></td>
+                    <td><%= `${users[i].nom}` %></td>
+                    <td><%= `${users[i].prenom}` %></td>
+                    <td><a href="/supprimer?userDel=<%= `${i}` %>">Supprimer</a></td>
+                </tr>
+                <% } %>
+            </table>
+            <% } %>
+        </div>
+    </main>
+    
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+
+</html>

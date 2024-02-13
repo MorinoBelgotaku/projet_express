@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>Formulaire</h1>
+            <form action="formulaire-save" method="post">
+                <div>
+                    <label>Nom</label>
+                    <input type="text" name="nom" >
+                </div>
+                <div>
+                    <label>Prénom</label>
+                    <input type="text" name="prenom" >
+                </div>
+                <div>
+                    <input type="submit" value="ENREGISTRER">
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+
+</html>
