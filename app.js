@@ -2,6 +2,8 @@ const express = require('express');
 const ejs = require('ejs');
 const app = express();
 const bodyParser = require('body-parser');
+const { v4: uuidv4 } = require('uuid');
+
 const port = 3000;
 
 app.set('view engine','ejs');
@@ -88,18 +90,24 @@ app.post('/formulaire-save', (req, res) => {
   const nom = req.body.nom
   const prenom = req.body.prenom
   database.users.push({
-     nom,
-     prenom 
+    id: uuidv4(),
+    nom,
+    prenom 
   })
   // res.send(`Bonjour ${nom} ${prenom}`)
   res.redirect('/utilisateurs')
 })
 
 app.get('/supprimer', (req, res) => {
-  const userDel = req.query.userDel;
-
-  database.users.splice(userDel, 1);
-  
+  const id = req.query.id;
+  if (id != null) {
+    const index = database.users.findIndex(function(user) {
+      return user.id === id
+    });
+    if (index !== -1) {
+      database.users.splice(index, 1);
+    }
+  }
   res.redirect('/utilisateurs')
 });
 
@@ -109,12 +117,20 @@ app.get('/supprimer', (req, res) => {
 
 
 app.get('/formulaire', (req, res) => {
-  res.render('pages/formulaire')
+  const id = req.query.id
+  const nom = database.users.find(function(user) {
+    return user.id === id
+  })
+  const prenom = database.users.find(id).prenom
+  res.render('pages/formulaire', {
+    users: database.users,
+    id
+})
 })
 
 app.get('/utilisateurs', (req, res) => {
   res.render('pages/utilisateurs', {
-      users: database.users
+      users: database.users,
   })
 })
 
