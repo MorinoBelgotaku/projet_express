@@ -1,9 +1,16 @@
 const express = require('express');
 const ejs = require('ejs');
 const app = express();
+const bodyParser = require('body-parser');
 const port = 3000;
 
 app.set('view engine','ejs');
+
+const database = {
+  users: []
+}
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   let prenom = req.query.prenom
@@ -77,7 +84,39 @@ app.get('/cv_morin_bruno', (req, res) => {
   res.download('PDF/CV_Morin_Bruno.pdf')
 });
 
+app.post('/formulaire-save', (req, res) => {
+  const nom = req.body.nom
+  const prenom = req.body.prenom
+  database.users.push({
+     nom,
+     prenom 
+  })
+  // res.send(`Bonjour ${nom} ${prenom}`)
+  res.redirect('/utilisateurs')
+})
 
+app.get('/supprimer', (req, res) => {
+  const userDel = req.query.userDel;
+
+  database.users.splice(userDel, 1);
+  
+  res.redirect('/utilisateurs')
+});
+
+// Créer une nouvelle route /utilisateurs
+// avec un tpl html qui permet de lister les utilisateurs
+
+
+
+app.get('/formulaire', (req, res) => {
+  res.render('pages/formulaire')
+})
+
+app.get('/utilisateurs', (req, res) => {
+  res.render('pages/utilisateurs', {
+      users: database.users
+  })
+})
 
 
 app.listen(port, () => {
