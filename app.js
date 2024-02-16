@@ -82,6 +82,41 @@ app.get('/eafc', (req, res) => {
   res.redirect('https://www.iepsm.be/')
 });
 
+app.get('/supprimer', (req, res) => {
+  const uuid = req.query.uuid;
+  if (uuid != null) {
+    const index = database.users.findIndex(function (user) {
+      return user.id === uuid
+    });
+    if (index !== -1) {
+      database.users.splice(index, 1);
+    }
+  }
+  res.redirect('/utilisateurs')
+});
+
+// Créer une nouvelle route /utilisateurs
+// avec un tpl html qui permet de lister les utilisateurs
+
+app.get('/formulaire', (req, res) => {
+  const uuid = req.query.uuid
+  let id_user = database.users.find((user) => {
+    return user.id === uuid
+  });
+
+  const nom = id_user == null ? '' : id_user.nom;
+  const prenom = id_user == null ? '' : id_user.prenom;
+  const button_modify = id_user == null ? `Ajouter l'utilisateur` : `Modifier`;
+
+  res.render('pages/formulaire', {
+    users: database.users,
+    nom,
+    prenom,
+    uuid,
+    button_modify
+  })
+})
+
 app.post('/formulaire-save', (req, res) => {
   const nom = req.body.nom
   const prenom = req.body.prenom
@@ -103,52 +138,11 @@ app.post('/formulaire-save', (req, res) => {
   res.redirect('/utilisateurs')
 })
 
-app.get('/supprimer', (req, res) => {
-  const uuid = req.query.uuid;
-  if (uuid != null) {
-    const index = database.users.findIndex(function (user) {
-      return user.id === uuid
-    });
-    if (index !== -1) {
-      database.users.splice(index, 1);
-    }
-  }
-  res.redirect('/utilisateurs')
-});
-
-// Créer une nouvelle route /utilisateurs
-// avec un tpl html qui permet de lister les utilisateurs
-
-
-
-app.get('/formulaire', (req, res) => {
-  const uuid = req.query.uuid
-  let id_user = database.users.find((user) => {
-    return user.id === uuid
-  });
-
-  const nom = id_user == null ? '' : id_user.nom;
-  const prenom = id_user == null ? '' : id_user.prenom;
-  const button_modify = id_user == null ? `Ajouter l'utilisateur` : `Modifier`;
-
-  res.render('pages/formulaire', {
-    users: database.users,
-    nom,
-    prenom,
-    uuid,
-    button_modify
-  })
-})
-
-
-
-
 app.get('/utilisateurs', (req, res) => {
   res.render('pages/utilisateurs', {
     users: database.users
   })
 })
-
 
 app.listen(port, () => {
   console.log('Serveur en ligne !')
