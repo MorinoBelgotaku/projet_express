@@ -14,17 +14,17 @@
     <main>
         <div class="jumbotron">
             <h1>Formulaire</h1>
-            <form action="formulaire-save" method="post">
-                <div>
+            <form action="formulaire-save?uuid=<%- uuid %>" method="post">
+                <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" name="nom" value="<%- nom %>">
+                    <input type="text" name="nom" value="<%- nom %>" class="form-control" required>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Prénom</label>
-                    <input type="text" name="prenom" value="<%- prenom %>">
+                    <input type="text" name="prenom" value="<%- prenom %>" class="form-control" required>
                 </div>
                 <div>
-                    <input type="submit" value="ENREGISTRER">
+                    <button type="submit" class="btn btn-primary"><%- button_modify %></button>
                 </div>
             </form>
         </div>
