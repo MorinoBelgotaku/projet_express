@@ -82,6 +82,7 @@ app.get('/eafc', (req, res) => {
   res.redirect('https://www.iepsm.be/')
 });
 
+<<<<<<< Updated upstream
 app.get('/cv_morin_bruno', (req, res) => {
   res.download('PDF/CV_Morin_Bruno.pdf')
 });
@@ -135,7 +136,9 @@ app.get('/utilisateurs', (req, res) => {
 })
 
 
+=======
+>>>>>>> Stashed changes
 app.listen(port, () => {
   console.log('Serveur en ligne !')
-  console.log(`localhost:${port}`)
+  console.log(`http://localhost:${port}`)
 });
