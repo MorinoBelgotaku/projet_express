@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
 
 });
 
+app.get('/about', function(req, res) {
+  res.render('pages/about');
+});
+
 app.get('/hello-world', (req, res) => {
   res.send('Hello World!')
 });
