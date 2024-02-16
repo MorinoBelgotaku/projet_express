@@ -144,6 +144,11 @@ app.get('/utilisateurs', (req, res) => {
   })
 })
 
+app.use((req, res, next) => {
+		res.status(404).render('pages/erreurs/404')
+
+});
+
 app.listen(port, () => {
   console.log('Serveur en ligne !')
   console.log(`http://localhost:${port}`)
