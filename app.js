@@ -78,10 +78,6 @@ app.get('/calculatrice', (req, res) => {
   }
 });
 
-app.get('/youtube', (req, res) => {
-  res.redirect('https://youtube.com')
-});
-
 app.get('/eafc', (req, res) => {
   res.redirect('https://www.iepsm.be/')
 });
