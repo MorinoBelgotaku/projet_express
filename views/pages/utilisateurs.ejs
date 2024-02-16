@@ -29,8 +29,10 @@
                     <td><%= `${i+1}` %></td>
                     <td><%= `${users[i].nom}` %></td>
                     <td><%= `${users[i].prenom}` %></td>
-                    <td><a href="/formulaire?uuid=<%= `${users[i].id}` %>">Modifier</a></td>
-                    <td><a href="/supprimer?uuid=<%= `${users[i].id}` %>">Supprimer</a></td>
+                    <td>
+                        <a href="/formulaire?uuid=<%= `${users[i].id}` %>">Modifier<i class="fa-solid fa-pen"></i></a>
+                        <a href="/supprimer?uuid=<%= `${users[i].id}` %>">Supprimer<i class="fa-solid fa-trash-can"></i></a>
+                    </td>
                 </tr>
                 <% } %>
             </table>
