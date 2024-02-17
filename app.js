@@ -16,12 +16,12 @@ const database = {
 // Liste des liens navigable
 const nav = [
   {
-    title: "Home",
+    title: "Accueil",
     url: "/"
   },
   {
-    title: "About",
-    url: "/about"
+    title: "A propos",
+    url: "/a-propos"
   },
   {
     title: "Formulaire",
@@ -46,16 +46,16 @@ app.get('/', (req, res) => {
     prenom,
     nom, 
     nav, 
-    title: "Home",
+    title: "Accueil",
     description: "Page d'accueil"
   });
 });
 
-app.get('/about', function(req, res) {
+app.get('/a-propos', function(req, res) {
   res.render('pages/about', { 
     nav, 
-    title: "About",
-    description: "Page about"
+    title: "A propos",
+    description: "Page A propos"
   });
 });
 
@@ -71,9 +71,6 @@ app.get('/supprimer', (req, res) => {
   }
   res.redirect('/utilisateurs')
 });
-
-// Créer une nouvelle route /utilisateurs
-// avec un tpl html qui permet de lister les utilisateurs
 
 app.get('/formulaire', (req, res) => {
   const uuid = req.query.uuid
