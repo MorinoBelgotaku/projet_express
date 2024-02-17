@@ -52,7 +52,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', function(req, res) {
-  res.render('pages/about', { nav, title: "About"});
+  res.render('pages/about', { 
+    nav, 
+    title: "About",
+    description: "Page about"
+  });
 });
 
 app.get('/supprimer', (req, res) => {
@@ -88,7 +92,8 @@ app.get('/formulaire', (req, res) => {
     uuid,
     button_modify,
     nav,
-    title: "Formulaire"
+    title: "Formulaire",
+    description: "Ajouter un utilisateur"
   })
 })
 
@@ -117,7 +122,8 @@ app.get('/utilisateurs', (req, res) => {
   res.render('pages/utilisateurs', {
     users: database.users,
     nav, 
-    title: "Utilisateurs"
+    title: "Utilisateurs",
+    description: "Liste les utilisateurs"
   })
 })
 
@@ -126,8 +132,11 @@ app.get('/eafc', (req, res) => {
 });
 
 app.use((req, res, next) => {
-		res.status(404).render('pages/erreurs/404', { nav, title: "Page non trouvé" })
-
+		res.status(404).render('pages/erreurs/404', { 
+      nav, 
+      title: "Page non trouvé",
+      description: ""
+    })
 });
 
 // app.get('/hello-world', (req, res) => {
