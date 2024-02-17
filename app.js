@@ -37,6 +37,7 @@ const nav = [
   }
 ]
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
@@ -73,7 +74,7 @@ app.get('/supprimer', (req, res) => {
 });
 
 app.get('/formulaire', (req, res) => {
-  const uuid = req.query.uuid
+  const uuid = req.query.uuid;
   let id_user = database.users.find((user) => {
     return user.id === uuid
   });
