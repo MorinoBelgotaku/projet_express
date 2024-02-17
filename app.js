@@ -8,12 +8,22 @@ const port = 3000;
 
 app.set('view engine', 'ejs');
 
-// Base de données
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+/////////////////////
+// Base de données //
+/////////////////////
+
 const database = {
   users: []
 }
 
-// Liste des liens navigable
+
+///////////////////////////////
+// Liste des liens navigable //
+///////////////////////////////
+
 const nav = [
   {
     title: "Accueil",
@@ -37,8 +47,10 @@ const nav = [
   }
 ]
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+
+/////////////////
+// Page racine //
+/////////////////
 
 app.get('/', (req, res) => {
   let prenom = req.query.prenom
@@ -52,6 +64,11 @@ app.get('/', (req, res) => {
   });
 });
 
+
+///////////////////
+// Page A propos //
+///////////////////
+
 app.get('/a-propos', function(req, res) {
   res.render('pages/about', { 
     nav, 
@@ -60,18 +77,10 @@ app.get('/a-propos', function(req, res) {
   });
 });
 
-app.get('/supprimer', (req, res) => {
-  const uuid = req.query.uuid;
-  if (uuid != null) {
-    const index = database.users.findIndex(function (user) {
-      return user.id === uuid
-    });
-    if (index !== -1) {
-      database.users.splice(index, 1);
-    }
-  }
-  res.redirect('/utilisateurs')
-});
+
+////////////////
+// Formulaire //
+////////////////
 
 app.get('/formulaire', (req, res) => {
   const uuid = req.query.uuid;
@@ -116,6 +125,11 @@ app.post('/formulaire-save', (req, res) => {
   res.redirect('/utilisateurs')
 })
 
+
+//////////////////////
+// Page Utilisateur //
+//////////////////////
+
 app.get('/utilisateurs', (req, res) => {
   res.render('pages/utilisateurs', {
     users: database.users,
@@ -125,9 +139,32 @@ app.get('/utilisateurs', (req, res) => {
   })
 })
 
+app.get('/supprimer', (req, res) => {
+  const uuid = req.query.uuid;
+  if (uuid != null) {
+    const index = database.users.findIndex(function (user) {
+      return user.id === uuid
+    });
+    if (index !== -1) {
+      database.users.splice(index, 1);
+    }
+  }
+  res.redirect('/utilisateurs')
+});
+
+
+///////////////
+// Page EAFC //
+///////////////
+
 app.get('/eafc', (req, res) => {
   res.redirect('https://www.iepsm.be/')
 });
+
+
+//////////////////
+// Pages Erreur //
+//////////////////
 
 app.use((req, res, next) => {
 		res.status(404).render('pages/erreurs/404', { 
@@ -135,6 +172,16 @@ app.use((req, res, next) => {
       title: "Page non trouvé",
       description: ""
     })
+});
+
+
+////////////////////////////////
+// Lancement de l'application //
+////////////////////////////////
+
+app.listen(port, () => {
+  console.log('Serveur en ligne !')
+  console.log(`http://localhost:${port}`)
 });
 
 // app.get('/hello-world', (req, res) => {
@@ -190,7 +237,3 @@ app.use((req, res, next) => {
 //   }
 // });
 
-app.listen(port, () => {
-  console.log('Serveur en ligne !')
-  console.log(`http://localhost:${port}`)
-});
