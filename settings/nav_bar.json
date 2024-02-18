@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Accueil",
+        "url": "/",
+        "blank": false
+    },
+    {
+        "title": "A propos",
+        "url": "/a-propos",
+        "blank": false
+    },
+    {
+        "title": "Formulaire",
+        "url": "/formulaire",
+        "blank": false
+    },
+    {
+        "title": "Utilisateurs",
+        "url": "/utilisateurs",
+        "blank": false
+    },
+    {
+        "title": "EAFC Mouscron",
+        "url": "/eafc",
+        "blank": true
+    }
+]

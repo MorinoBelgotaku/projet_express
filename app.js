@@ -3,6 +3,8 @@ const ejs = require('ejs');
 const app = express();
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
+const nav = require('./settings/nav_bar.json'); // Liste des liens navigable
+const database = require('./databases/database.json'); // Base de données
 
 const port = 3000;
 
@@ -10,42 +12,6 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-
-/////////////////////
-// Base de données //
-/////////////////////
-
-const database = {
-  users: []
-}
-
-
-///////////////////////////////
-// Liste des liens navigable //
-///////////////////////////////
-
-const nav = [
-  {
-    title: "Accueil",
-    url: "/"
-  },
-  {
-    title: "A propos",
-    url: "/a-propos"
-  },
-  {
-    title: "Formulaire",
-    url: "/formulaire"
-  },
-  {
-    title: "Utilisateurs",
-    url: "/utilisateurs"
-  },
-  {
-    title: "EAFC Mouscron",
-    url: "/eafc"
-  }
-]
 
 
 /////////////////
