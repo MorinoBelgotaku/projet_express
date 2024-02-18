@@ -13,7 +13,7 @@
 
     <main>
         <div class="jumbotron">
-            <h1>Formulaire</h1>
+            <h1 class="border-bottom pb-2"><i class="fa-solid <%- button_modify == "Modifier" ? "fa-user-pen" : "fa-user-plus" %> mr-3"></i>Formulaire</h1>
             <form action="formulaire-save?uuid=<%- uuid %>" method="post">
                 <div class="form-group">
                     <label>Nom</label>
