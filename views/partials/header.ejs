@@ -6,7 +6,7 @@
         <li class="nav-item">
           <a class="nav-link text-primary active" href="<%- nav[i].url %>"><%= `${nav[i].title}` %></a>
         </li>
-        <% } else if (nav[i].title === "EAFC Mouscron") { %>
+        <% } else if (nav[i].blank === true) { %>
           <li class="nav-item">
             <a class="nav-link text-secondary" href="<%- nav[i].url %>" target="_blank"><%- nav[i].title %></a>
           </li>
