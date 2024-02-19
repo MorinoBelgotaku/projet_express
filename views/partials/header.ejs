@@ -2,19 +2,19 @@
   <a class="navbar-brand" href="/">EJS Is Fun</a>
   <ul class="nav nav-tabs">
     <% for (let i = 0; i < nav.length; i++) { %>
-      <% if (nav[i].title === title) { %>
-        <li class="nav-item">
-          <a class="nav-link text-primary active" href="<%- nav[i].url %>"><%= `${nav[i].title}` %></a>
-        </li>
-        <% } else if (nav[i].blank === true) { %>
-          <li class="nav-item">
-            <a class="nav-link text-secondary" href="<%- nav[i].url %>" target="_blank"><%- nav[i].title %></a>
-          </li>
-      <% } else { %>
-        <li class="nav-item">
-          <a class="nav-link text-secondary" href="<%- nav[i].url %>"><%- nav[i].title %></a>
-        </li>
-      <% } %>
+    <% if (nav[i].title === title && nav[i].display === true) { %>
+    <li class="nav-item">
+      <a class="nav-link text-primary active" href="<%- nav[i].url %>"><%- nav[i].title %></a>
+    </li>
+    <% } else if (nav[i].blank === true && nav[i].display === true) { %>
+    <li class="nav-item">
+      <a class="nav-link text-secondary" href="<%- nav[i].url %>" target="_blank"><%- nav[i].title %></a>
+    </li>
+    <% } else if (nav[i].display === true) { %>
+    <li class="nav-item">
+      <a class="nav-link text-secondary" href="<%- nav[i].url %>"><%- nav[i].title %></a>
+    </li>
+    <% } %>
     <% } %>
   </ul>
 </nav>
