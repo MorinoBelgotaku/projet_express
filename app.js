@@ -50,13 +50,15 @@ app.get('/a-propos', function(req, res) {
 
 app.get('/formulaire', (req, res) => {
   const uuid = req.query.uuid;
-  let id_user = database.users.find((user) => {
-    return user.id === uuid
-  });
+  // Retourne les informations de l'utilisateur avec son ID
+  let id_user = database.users.find((user) => user.id === uuid);
 
-  const nom = id_user == null ? '' : id_user.nom;
-  const prenom = id_user == null ? '' : id_user.prenom;
-  const button_modify = id_user == null ? `Ajouter l'utilisateur` : `Modifier`;
+  // Recupere le nom qui sera afficher sur la page
+  const nom = id_user ? id_user.nom : '';
+  // Recupere le prenom qui sera afficher sur la page
+  const prenom = id_user ? id_user.prenom  : '';
+  // Change le texte du bouton sur la page
+  const button_modify = id_user ?  `Modifier` : `Ajouter l'utilisateur`; 
 
   res.render('pages/formulaire', {
     users: database.users,
@@ -71,17 +73,15 @@ app.get('/formulaire', (req, res) => {
 })
 
 app.post('/formulaire-save', (req, res) => {
-  const nom = req.body.nom
-  const prenom = req.body.prenom
-  const uuid = req.query.uuid
-  let user_exist = database.users.find((user) => {
-    return user.id === uuid
-  });
+  const nom = req.body.nom;
+  const prenom = req.body.prenom;
+  const uuid = req.query.uuid;
+  let user_exist = database.users.find((user) => user.id === uuid);
 
-  if (user_exist) {
+  if (user_exist) { // Si l'utilisateur existe alors on change ses informations
     user_exist.prenom = prenom;
     user_exist.nom = nom;
-  } else {
+  } else { // Sinon si il existe pas on ajoute un utilisateur
     database.users.push({
       id: uuidv4(),
       nom,
