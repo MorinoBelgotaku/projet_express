@@ -96,12 +96,14 @@ app.post('/formulaire-save', (req, res) => {
   let user_exist = database.users.find((user) => user.id === uuid);
 
   if (nom.length === 0 || prenom.length === 0) {
+    // Vérifie lors de l'ajout
     if (nom.length === 0 && prenom.length > 0 && uuid.length === 0) {
       res.redirect(`/formulaire?nom_invalid=true&prenom=${prenom}`);
     } else if (prenom.length === 0 && nom.length > 0 && uuid.length === 0) {
       res.redirect(`/formulaire?prenom_invalid=true&nom=${nom}`);
     } else if (nom.length === 0 && prenom.length === 0 && uuid.length === 0) {
       res.redirect('/formulaire?prenom_invalid=true&nom_invalid=true');
+    // Vérifie lors de la modification
     } else if (nom.length === 0 && prenom.length > 0 && uuid.length > 0) {
       res.redirect(`/formulaire?uuid=${uuid}&nom_invalid=true`);
     } else if (prenom.length === 0 && nom.length > 0 && uuid.length > 0) {
@@ -123,7 +125,7 @@ app.post('/formulaire-save', (req, res) => {
   }
   
   
-  res.redirect('/utilisateurs')
+  res.redirect('/utilisateurs?success=true')
 })
 
 
@@ -132,8 +134,10 @@ app.post('/formulaire-save', (req, res) => {
 //////////////////////
 
 app.get('/utilisateurs', (req, res) => {
+  const add_user = req.query.success;
   res.render('pages/utilisateurs', {
     users: database.users,
+    add_user,
     nav, 
     title: "Utilisateurs",
     description: "Liste les utilisateurs"
