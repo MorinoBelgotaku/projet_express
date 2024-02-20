@@ -50,13 +50,27 @@ app.get('/a-propos', function(req, res) {
 
 app.get('/formulaire', (req, res) => {
   const uuid = req.query.uuid;
+  const nom_invalid = req.query.nom_invalid;
+  const prenom_invalid = req.query.prenom_invalid;
+
   // Retourne les informations de l'utilisateur avec son ID
   let id_user = database.users.find((user) => user.id === uuid);
 
   // Recupere le nom qui sera afficher sur la page
-  const nom = id_user ? id_user.nom : '';
+  let nom = '';
+  if (id_user) {
+    nom = id_user ? id_user.nom : '';
+  } else {
+    nom = req.query.nom ? req.query.nom : '';
+  }
   // Recupere le prenom qui sera afficher sur la page
-  const prenom = id_user ? id_user.prenom  : '';
+  let prenom = '';
+  if (id_user) {
+    prenom = id_user ? id_user.prenom : '';
+  } else {
+    prenom = req.query.prenom ? req.query.prenom : '';
+  }
+  
   // Change le texte du bouton sur la page
   const button_modify = id_user ?  `Modifier` : `Ajouter l'utilisateur`; 
 
@@ -66,6 +80,8 @@ app.get('/formulaire', (req, res) => {
     prenom,
     uuid,
     button_modify,
+    nom_invalid,
+    prenom_invalid,
     nav,
     title: "Formulaire",
     description: "Ajouter un utilisateur"
@@ -76,18 +92,36 @@ app.post('/formulaire-save', (req, res) => {
   const nom = req.body.nom;
   const prenom = req.body.prenom;
   const uuid = req.query.uuid;
+   // Recuperation des informations utilisateur pour les modifiers si l'ID est valide
   let user_exist = database.users.find((user) => user.id === uuid);
 
-  if (user_exist) { // Si l'utilisateur existe alors on change ses informations
-    user_exist.prenom = prenom;
-    user_exist.nom = nom;
-  } else { // Sinon si il existe pas on ajoute un utilisateur
-    database.users.push({
-      id: uuidv4(),
-      nom,
-      prenom
-    })
+  if (nom.length === 0 || prenom.length === 0) {
+    if (nom.length === 0 && prenom.length > 0 && uuid.length === 0) {
+      res.redirect(`/formulaire?nom_invalid=true&prenom=${prenom}`);
+    } else if (prenom.length === 0 && nom.length > 0 && uuid.length === 0) {
+      res.redirect(`/formulaire?prenom_invalid=true&nom=${nom}`);
+    } else if (nom.length === 0 && prenom.length === 0 && uuid.length === 0) {
+      res.redirect('/formulaire?prenom_invalid=true&nom_invalid=true');
+    } else if (nom.length === 0 && prenom.length > 0 && uuid.length > 0) {
+      res.redirect(`/formulaire?uuid=${uuid}&nom_invalid=true`);
+    } else if (prenom.length === 0 && nom.length > 0 && uuid.length > 0) {
+      res.redirect(`/formulaire?uuid=${uuid}&prenom_invalid=true`);
+    } else if (prenom.length === 0 && nom.length === 0 && uuid.length > 0) {
+      res.redirect(`/formulaire?uuid=${uuid}&prenom_invalid=true&nom_invalid=true`);
+    }
+  } else {
+    if (user_exist) { // Si l'utilisateur existe alors on change ses informations
+      user_exist.prenom = prenom;
+      user_exist.nom = nom;
+    } else { // Sinon si il existe pas on ajoute un utilisateur
+      database.users.push({
+        id: uuidv4(),
+        nom,
+        prenom
+      })
+    }
   }
+  
   
   res.redirect('/utilisateurs')
 })

@@ -17,11 +17,17 @@
             <form action="formulaire-save?uuid=<%- uuid %>" method="post" class="mx-auto mt-5 w-25">
                 <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" name="nom" value="<%- nom %>" class="form-control" required>
+                    <input type="text" name="nom" value="<%- nom %>" class="form-control <%- nom_invalid ? "is-invalid" : "" %>">
+                    <div class="invalid-feedback">
+                        Nom manquant
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Prénom</label>
-                    <input type="text" name="prenom" value="<%- prenom %>" class="form-control" required>
+                    <input type="text" name="prenom" value="<%- prenom %>" class="form-control <%- prenom_invalid ? "is-invalid" : "" %>">
+                    <div class="invalid-feedback">
+                        Prénom manquant
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100"><%- button_modify %></button>
             </form>
